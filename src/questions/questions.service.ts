@@ -14,22 +14,22 @@ export class QuestionsService {
     @InjectRepository(Question)
     private questionsRepository: Repository<Question>,
   ) {}
-  async create(createQuestionDto: CreateQuestionDto): Promise<Question> {
+  create(createQuestionDto: CreateQuestionDto): Promise<Question> {
     const question = new Question();
     question.body = createQuestionDto.body;
 
     return this.questionsRepository.save(question);
   }
 
-  async findAll(): Promise<Question[]> {
+  findAll(): Promise<Question[]> {
     return this.questionsRepository.find();
   }
 
-  async findOne(id: number): Promise<Question> {
+  findOne(id: number): Promise<Question> {
     return this.questionsRepository.findOne({ where: { id } });
   }
 
-  async update(
+  update(
     id: number,
     updateQuestionDto: UpdateQuestionDto,
   ): Promise<UpdateResult> {

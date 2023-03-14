@@ -9,11 +9,13 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
+import { ApiTags } from '@nestjs/swagger';
+
 import { QuestionsService } from './questions.service';
 
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
-
+@ApiTags('Questions')
 @Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
