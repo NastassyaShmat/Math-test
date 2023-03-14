@@ -15,10 +15,7 @@ export class QuestionsService {
     private questionsRepository: Repository<Question>,
   ) {}
   create(createQuestionDto: CreateQuestionDto): Promise<Question> {
-    const question = new Question();
-    question.body = createQuestionDto.body;
-
-    return this.questionsRepository.save(question);
+    return this.questionsRepository.save(createQuestionDto);
   }
 
   findAll(): Promise<Question[]> {

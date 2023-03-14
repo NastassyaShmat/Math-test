@@ -1,8 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { AnswersService } from './answers.service';
+
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 
+@ApiTags('Answers')
 @Controller('answers')
 export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
@@ -18,17 +31,20 @@ export class AnswersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.answersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
+  update(
+    @Param('id', ParseIntPipe) id: string,
+    @Body() updateAnswerDto: UpdateAnswerDto,
+  ) {
     return this.answersService.update(+id, updateAnswerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: string) {
     return this.answersService.remove(+id);
   }
 }
