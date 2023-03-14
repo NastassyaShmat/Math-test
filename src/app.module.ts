@@ -11,6 +11,11 @@ import { AppController } from './app.controller';
 
 import { AppService } from './app.service';
 
+import { Question } from './questions/entities/question.entity';
+import { Answer } from './answers/entities/answer.entity';
+import { Attempt } from './attempts/entities/attempt.entity';
+import { User } from './users/entities/user.entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -19,17 +24,22 @@ import { AppService } from './app.service';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        name: 'main',
+        name: configService.get<string>('DATABASE_NAME') || 'math-test',
         host: configService.get<string>('DATABASE_HOST') || 'localhost',
         username: configService.get<string>('DATABASE_USER') || 'postgres',
         password: configService.get<string>('DATABASE_PASS') || '123456789',
         database: configService.get<string>('DATABASE_DB') || 'postgres',
         port: +configService.get<number>('DATABASE_PORT') || 5432,
+        entities: [User, Question, Answer, Attempt],
         autoLoadEntities: true,
         synchronize: true,
       }),
-    }),      
-    UsersModule, QuestionsModule, AnswersModule, AttemptsModule],
+    }),
+    UsersModule,
+    QuestionsModule,
+    AnswersModule,
+    AttemptsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
