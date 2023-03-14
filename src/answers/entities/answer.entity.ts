@@ -1,7 +1,8 @@
-import { IsBoolean } from "class-validator";
-import { Question } from "src/questions/entities/question.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+import { IsBoolean } from "class-validator";
+
+import { Question } from "src/questions/entities/question.entity";
 @Entity({name: 'answers'})
 export class Answer {
 	@PrimaryGeneratedColumn('increment')

@@ -1,8 +1,9 @@
-import { Exclude } from "class-transformer";
-import { IsEmail } from "class-validator";
-import { Attempt } from "src/attempts/entities/attempt.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+import { Exclude } from "class-transformer";
+import { IsEmail } from "class-validator";
+ 
+import { Attempt } from "src/attempts/entities/attempt.entity";
 @Entity({name: 'users'})
 export class User {
 	@PrimaryGeneratedColumn('increment')
