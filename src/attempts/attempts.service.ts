@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+
+import { Attempt } from './entities/attempt.entity';
+
 import { CreateAttemptDto } from './dto/create-attempt.dto';
 import { UpdateAttemptDto } from './dto/update-attempt.dto';
 
 @Injectable()
 export class AttemptsService {
-  create(createAttemptDto: CreateAttemptDto) {
-    return 'This action adds a new attempt';
+  constructor(
+    @InjectRepository(Attempt) private attemptsRepository: Repository<Attempt>,
+  ) {}
+  create(
+    createAttemptDto: CreateAttemptDto | CreateAttemptDto[],
+  ): Promise<Attempt[]> {
+    return;
   }
 
-  findAll() {
-    return `This action returns all attempts`;
+  findAll(): Promise<Attempt[]> {
+    return this.attemptsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} attempt`;
+  findOne(id: number): Promise<Attempt> {
+    return this.attemptsRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateAttemptDto: UpdateAttemptDto) {
-    return `This action updates a #${id} attempt`;
+  update(
+    id: number,
+    updateAttemptDto: UpdateAttemptDto,
+  ): Promise<UpdateResult> {
+    return;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} attempt`;
+  remove(id: number): Promise<DeleteResult> {
+    return this.attemptsRepository.delete(id);
   }
 }
