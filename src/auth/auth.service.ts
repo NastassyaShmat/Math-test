@@ -12,6 +12,20 @@ export class AuthService {
     @InjectRepository(User) private usersRepository: Repository<User>,
     private readonly usersService: UsersService,
   ) {}
+
+  async validateUser(email: string, password: string): Promise<any> {
+    const existingUser = await this.usersRepository.findOne({
+      where: { email: email },
+    });
+
+    if (existingUser && existingUser.password === password) {
+      const { password, ...result } = existingUser;
+      return result;
+    }
+
+    return null;
+  }
+
   login(signInDto: SignInDto) {
     return 'This action adds a new auth';
   }
@@ -21,7 +35,9 @@ export class AuthService {
       where: { email: signUpDto.email },
     });
 
-    if (!existingUser) {
+    console.log(existingUser);
+
+    if (existingUser) {
       throw new BadRequestException(
         `User with ${signUpDto.email} already exist`,
       );
