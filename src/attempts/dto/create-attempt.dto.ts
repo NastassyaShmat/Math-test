@@ -2,6 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsNumber } from 'class-validator';
 
 export class CreateAttemptDto {
+  // @ApiProperty()
+  // @IsDefined()
+  // @IsNumber()
+  // userId: number;
+
   @ApiProperty()
   @IsDefined()
   @IsNumber()
