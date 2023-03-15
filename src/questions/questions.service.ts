@@ -19,7 +19,10 @@ export class QuestionsService {
   }
 
   findAll(): Promise<Question[]> {
-    return this.questionsRepository.find();
+    return this.questionsRepository.find({
+      select: { id: true, body: true, answers: { id: true, value: true } },
+      relations: { answers: true },
+    });
   }
 
   findOne(id: number): Promise<Question> {
