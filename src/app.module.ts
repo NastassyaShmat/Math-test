@@ -15,6 +15,7 @@ import { Question } from './questions/entities/question.entity';
 import { Answer } from './answers/entities/answer.entity';
 import { Attempt } from './attempts/entities/attempt.entity';
 import { User } from './users/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { User } from './users/entities/user.entity';
     QuestionsModule,
     AnswersModule,
     AttemptsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

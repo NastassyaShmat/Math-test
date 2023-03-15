@@ -23,6 +23,9 @@ export class User {
   @Exclude()
   password: string;
 
+  @Column({ name: 'is_admin', type: 'boolean', default: false })
+  isAdmin: boolean;
+
   @OneToMany(() => Attempt, (attempt) => attempt.user, {
     onDelete: 'CASCADE',
   })

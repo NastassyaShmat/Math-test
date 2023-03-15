@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle('Math Test App Server')
     .setDescription('Math Test App Server API description')
     .setVersion('1.0')
+    .addTag('Auth')
     .addTag('Users')
     .addTag('Questions')
     .addTag('Answers')

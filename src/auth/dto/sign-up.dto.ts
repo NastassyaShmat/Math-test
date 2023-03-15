@@ -9,7 +9,7 @@ import {
   Min,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class SignUpDto {
   @ApiProperty()
   @IsDefined()
   @IsString()
