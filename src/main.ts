@@ -1,7 +1,10 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import * as cookieParser from 'cookie-parser';
 import * as passport from 'passport';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -12,6 +15,7 @@ async function bootstrap() {
     allowedHeaders: '*',
     methods: 'GET, POST, PUT, PATCH, DELETE',
   });
+  app.useGlobalPipes(new ValidationPipe());
 
   app.use(passport.initialize());
 

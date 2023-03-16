@@ -63,8 +63,6 @@ export class UsersService {
     });
   }
 
-
-
   update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     return this.usersRepository.update(id, updateUserDto);
   }

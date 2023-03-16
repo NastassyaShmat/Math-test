@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 import { UsersModule } from './users/users.module';
 import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
 import { AttemptsModule } from './attempts/attempts.module';
+import { AuthModule } from './auth/auth.module';
 
 import { AppController } from './app.controller';
 
@@ -15,8 +17,6 @@ import { Question } from './questions/entities/question.entity';
 import { Answer } from './answers/entities/answer.entity';
 import { Attempt } from './attempts/entities/attempt.entity';
 import { User } from './users/entities/user.entity';
-import { AuthModule } from './auth/auth.module';
-import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [

@@ -30,16 +30,4 @@ export class User {
     onDelete: 'CASCADE',
   })
   userAttempts: Attempt[];
-
-  // @BeforeInsert()
-  // @BeforeUpdate()
-  // async hashPassword() {
-  //   if (this.password?.length) {
-  //     this.password = await Crypto.getEncryptedString(this.password);
-  //   }
-  // }
-
-  // async verify(plainPassword: string): Promise<boolean> {
-  //   return Crypto.verifyEncryptedWithOriginal(this.password, plainPassword);
-  // }
 }

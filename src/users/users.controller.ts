@@ -31,11 +31,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Roles(Role.ADMIN)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
+  @Roles(Role.ADMIN)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: string) {
     return this.usersService.findOne(+id);
