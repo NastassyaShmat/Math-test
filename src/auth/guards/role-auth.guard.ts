@@ -21,14 +21,12 @@ export class RolesAuthGuard implements CanActivate {
     }
 
     const user: User = context.switchToHttp().getRequest().user;
-    console.log(user);
     const userRole = this.getUserRole(user);
 
     return requiredRoles.includes(userRole);
   }
 
   private getUserRole(user: User): Role {
-    console.log(user);
     const isAdmin = user.isAdmin;
     return isAdmin ? Role.ADMIN : Role.USER;
   }

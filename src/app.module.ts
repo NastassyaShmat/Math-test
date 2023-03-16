@@ -16,6 +16,7 @@ import { Answer } from './answers/entities/answer.entity';
 import { Attempt } from './attempts/entities/attempt.entity';
 import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -43,6 +44,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtService],
 })
 export class AppModule {}

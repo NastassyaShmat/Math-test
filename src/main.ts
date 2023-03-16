@@ -15,7 +15,7 @@ async function bootstrap() {
 
   app.use(passport.initialize());
 
-  app.use(cookieParser());
+  app.use(cookieParser('secret'));
 
   const config = new DocumentBuilder()
     .setTitle('Math Test App Server')
@@ -26,6 +26,7 @@ async function bootstrap() {
     .addTag('Questions')
     .addTag('Answers')
     .addTag('Attemts')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -24,16 +24,15 @@ export class TokenInterceptor implements NestInterceptor {
         const reply = context.switchToHttp().getResponse();
         const token = this.authService.signToken(user);
 
-        console.log(context.switchToHttp().getResponse());
         reply.header('Authorization', `Bearer ${token}`);
-        reply.setCookie('token', token, {
+        reply.cookie('token', token, {
           httpOnly: true,
           signed: true,
           sameSite: 'strict',
           secure: true,
         });
 
-        return { ...user, token };
+        return { ...user };
       }),
     );
   }
