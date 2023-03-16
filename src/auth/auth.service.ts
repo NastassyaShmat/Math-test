@@ -6,12 +6,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 
+import { Repository } from 'typeorm';
+
+import * as bcrypt from 'bcrypt';
+
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
 import { SignUpDto } from './dto/sign-up.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
@@ -46,7 +48,7 @@ export class AuthService {
     });
 
     try {
-     // await this.verifyPassword(password, existingUser.password);
+      await this.verifyPassword(password, existingUser.password);
       existingUser.password = undefined;
       return existingUser;
     } catch {

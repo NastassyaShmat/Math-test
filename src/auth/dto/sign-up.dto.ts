@@ -5,8 +5,8 @@ import {
   IsEmail,
   IsOptional,
   IsString,
-  Max,
-  Min,
+  MaxLength,
+  MinLength,
 } from 'class-validator';
 
 export class SignUpDto {
@@ -33,7 +33,7 @@ export class SignUpDto {
   @ApiProperty()
   @IsDefined()
   @IsString()
-  @Min(4)
-  @Max(16)
+  @MinLength(4)
+  @MaxLength(16)
   password: string;
 }
