@@ -7,8 +7,14 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+import { Request } from 'express';
+
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 import { AttemptsService } from './attempts.service';
 
@@ -16,13 +22,15 @@ import { CreateAttemptDto } from './dto/create-attempt.dto';
 import { UpdateAttemptDto } from './dto/update-attempt.dto';
 
 @ApiTags('Attempts')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('attempts')
 export class AttemptsController {
   constructor(private readonly attemptsService: AttemptsService) {}
 
   @Post()
-  create(@Body() createAttemptDto: CreateAttemptDto) {
-    return this.attemptsService.create(createAttemptDto);
+  create(@Body() createAttemptDto: CreateAttemptDto, @Req() req: Request) {
+    return this.attemptsService.create(req, createAttemptDto);
   }
 
   @Get()

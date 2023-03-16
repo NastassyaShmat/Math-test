@@ -7,8 +7,11 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 import { AnswersService } from './answers.service';
 
@@ -16,6 +19,8 @@ import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @ApiTags('Answers')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('answers')
 export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}

@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { DeleteResult, In, Repository, UpdateResult } from 'typeorm';
+
+import { Request } from 'express';
 
 import { Attempt } from './entities/attempt.entity';
 import { Answer } from 'src/answers/entities/answer.entity';
@@ -18,6 +20,7 @@ export class AttemptsService {
     @InjectRepository(Answer) private answersRepository: Repository<Answer>,
   ) {}
   async create(
+    req: Request,
     createAttemptDto: CreateAttemptDto | CreateAttemptDto[],
   ): Promise<AttemptResponse> {
     const createAnswers: CreateAttemptDto[] = [];
@@ -45,14 +48,24 @@ export class AttemptsService {
 
     const score = (rigthAnswers.length / createAnswers.length).toFixed(2);
 
+    const numberAttempts = await this.getNumberAttempts(req['user']['id']);
+
+    if (numberAttempts?.length > 3) {
+      throw new BadRequestException('Number of attempts exceeds 3');
+    }
+
     const attempt = new Attempt();
     attempt.score = score;
-    attempt.number = 1;
-    attempt.userId = 1;
+    attempt.number = numberAttempts?.length + 1;
+    attempt.userId = req['user']['id'];
 
     await this.attemptsRepository.save(attempt);
 
     return { score };
+  }
+
+  getNumberAttempts(id: number) {
+    return this.attemptsRepository.find({ where: { userId: id } });
   }
 
   findAll(): Promise<Attempt[]> {
@@ -67,7 +80,7 @@ export class AttemptsService {
     id: number,
     updateAttemptDto: UpdateAttemptDto,
   ): Promise<UpdateResult> {
-    return;
+    return; //this.attemptsRepository.update(id, updateAttemptDto);
   }
 
   remove(id: number): Promise<DeleteResult> {
