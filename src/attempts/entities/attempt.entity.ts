@@ -31,13 +31,4 @@ export class Attempt {
   })
   @JoinColumn({ name: 'user_id' })
   user: User;
-
-  // @BeforeInsert()
-  // async countAttempts() {
-  //   if (this.number > 3) {
-  //     throw new BadRequestException('Your number of attempts more than 3');
-  //   }
-
-  //   this.number = this.number + 1;
-  // }
 }
