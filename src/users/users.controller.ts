@@ -16,11 +16,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Role } from 'src/auth/emuns/role.emun';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RolesAuthGuard } from 'src/auth/guards/role-auth.guard';
-import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Users')
 @Controller('users')
-@UseGuards(RolesAuthGuard)
+@UseGuards(JwtAuthGuard, RolesAuthGuard)
 @Roles(Role.ADMIN)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
