@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { DeleteResult, In, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, In, Repository } from 'typeorm';
 
 import { Request } from 'express';
 
@@ -9,7 +9,6 @@ import { Attempt } from './entities/attempt.entity';
 import { Answer } from 'src/answers/entities/answer.entity';
 
 import { CreateAttemptDto } from './dto/create-attempt.dto';
-import { UpdateAttemptDto } from './dto/update-attempt.dto';
 
 import { AttemptResponse } from './interfaces/attempt-response.interface';
 
@@ -56,7 +55,7 @@ export class AttemptsService {
 
     const attempt = new Attempt();
     attempt.score = score;
-    attempt.number = numberAttempts?.length + 1;
+    attempt.number = numberAttempts ? numberAttempts.length + 1 : 1;
     attempt.userId = req['user']['id'];
 
     await this.attemptsRepository.save(attempt);
@@ -74,13 +73,6 @@ export class AttemptsService {
 
   findOne(id: number): Promise<Attempt> {
     return this.attemptsRepository.findOne({ where: { id } });
-  }
-
-  update(
-    id: number,
-    updateAttemptDto: UpdateAttemptDto,
-  ): Promise<UpdateResult> {
-    return; //this.attemptsRepository.update(id, updateAttemptDto);
   }
 
   remove(id: number): Promise<DeleteResult> {

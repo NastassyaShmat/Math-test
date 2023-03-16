@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   ParseIntPipe,
@@ -14,16 +13,20 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { Request } from 'express';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/emuns/role.emun';
+
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesAuthGuard } from 'src/auth/guards/role-auth.guard';
 
 import { AttemptsService } from './attempts.service';
 
 import { CreateAttemptDto } from './dto/create-attempt.dto';
-import { UpdateAttemptDto } from './dto/update-attempt.dto';
 
 @ApiTags('Attempts')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesAuthGuard)
+@Roles(Role.ADMIN)
 @Controller('attempts')
 export class AttemptsController {
   constructor(private readonly attemptsService: AttemptsService) {}
@@ -41,14 +44,6 @@ export class AttemptsController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: string) {
     return this.attemptsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: string,
-    @Body() updateAttemptDto: UpdateAttemptDto,
-  ) {
-    return this.attemptsService.update(+id, updateAttemptDto);
   }
 
   @Delete(':id')

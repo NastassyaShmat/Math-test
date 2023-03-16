@@ -11,7 +11,11 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/emuns/role.emun';
+
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesAuthGuard } from 'src/auth/guards/role-auth.guard';
 
 import { AnswersService } from './answers.service';
 
@@ -20,7 +24,8 @@ import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @ApiTags('Answers')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesAuthGuard)
+@Roles(Role.ADMIN)
 @Controller('answers')
 export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}

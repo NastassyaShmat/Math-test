@@ -7,7 +7,6 @@ import { AttemptsService } from './attempts.service';
 
 import { AttemptsController } from './attempts.controller';
 import { Answer } from 'src/answers/entities/answer.entity';
-import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Attempt, Answer])],
