@@ -17,43 +17,53 @@ export class UsersService {
     return this.usersRepository.save(createUserDto);
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find({
-      relationLoadStrategy: 'join',
+  async findAll(): Promise<User[]> {
+    const existingUsers = await this.usersRepository.find({
+      relationLoadStrategy: 'query',
       relations: ['userAttempts'],
       select: {
+        id: true,
         firstName: true,
         lastName: true,
         userAttempts: { id: true, score: true, createdDate: true },
       },
       order: {
         userAttempts: {
-          createdDate: 'ASC',
+          createdDate: 'DESC',
         },
       },
     });
+
+    const users = existingUsers.filter((user) => {
+      if (user.userAttempts?.length) {
+        user.userAttempts.length = 1;
+        return user;
+      }
+    });
+
+    return users;
   }
 
   findOne(id: number): Promise<User> {
     return this.usersRepository.findOne({
       where: { id },
       relationLoadStrategy: 'join',
-      relations: {
-        userAttempts: true,
-      },
+      relations: ['userAttempts'],
       select: {
         id: true,
         firstName: true,
         lastName: true,
-        userAttempts: { score: true, createdDate: true },
+        userAttempts: { id: true, score: true, createdDate: true },
       },
       order: {
         userAttempts: {
-          createdDate: 'ASC',
+          createdDate: 'DESC',
         },
       },
     });
   }
+
+
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     return this.usersRepository.update(id, updateUserDto);

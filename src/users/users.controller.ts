@@ -7,21 +7,27 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { UsersService } from './users.service';
-
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Role } from 'src/auth/emuns/role.emun';
-import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RolesAuthGuard } from 'src/auth/guards/role-auth.guard';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
+import { UsersService } from './users.service';
+
+import { Role } from 'src/auth/emuns/role.emun';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+
+import { UpdateUserDto } from './dto/update-user.dto';
+
 @ApiTags('Users')
+@ApiBearerAuth()
 @Controller('users')
+@UseInterceptors(ClassSerializerInterceptor)
 @UseGuards(JwtAuthGuard, RolesAuthGuard)
-@Roles(Role.ADMIN)
+@Roles(Role.USER)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
