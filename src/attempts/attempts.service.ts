@@ -55,7 +55,7 @@ export class AttemptsService {
 
     const attempt = new Attempt();
     attempt.score = score;
-    attempt.number = numberAttempts ? numberAttempts.length + 1 : 1;
+    attempt.number = numberAttempts.length + 1;
     attempt.userId = req['user']['id'];
 
     await this.attemptsRepository.save(attempt);

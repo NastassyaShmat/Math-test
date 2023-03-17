@@ -17,7 +17,7 @@ export class Attempt {
   @Column({ name: 'attempt_score', type: 'varchar' })
   score: string;
 
-  @Column({ name: 'attempt_number', type: 'int', default: 0 })
+  @Column({ name: 'attempt_number', type: 'int' })
   number: number;
 
   @CreateDateColumn({ name: 'attempt_date', type: 'date' })
